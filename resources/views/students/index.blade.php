@@ -19,6 +19,9 @@
     <a href="{{ route('students.create') }}" class="btn btn-success mb-3">
         Create New Student
     </a>
+    <a href="{{ route('students.export') }}" class="btn btn-primary mb-3">
+        Export to CSV
+    </a>
 
     <table class="table table-bordered">
         <tr>

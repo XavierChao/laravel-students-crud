@@ -91,18 +91,16 @@ class StudentController extends Controller
                          ->with('success', 'Estudiante actualizado correctamente.');
     }
 
-    /**
-     * Eliminar estudiante
-     */
-    public function destroy(Student $student)
-    {
-        $student->delete();
+/**
+ * Eliminar estudiante
+ */
+public function destroy(Student $student)
+{
+    $student->delete();
 
-        return redirect()->route('students.index')
-                         ->with('success', 'Estudiante eliminado correctamente.');
-    }
-
-    use App\Models\Student;
+    return redirect()->route('students.index')
+                     ->with('success', 'Estudiante eliminado correctamente.');
+}
 
 public function exportCsv()
 {

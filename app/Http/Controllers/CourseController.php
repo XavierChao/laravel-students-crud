@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -63,4 +64,28 @@ class CourseController extends Controller
         return redirect()->route('courses.index')
             ->with('success', 'Course deleted successfully.');
     }
+
+    public function exportCsv()
+{
+    $fileName = 'courses.csv';
+    $courses = Course::all();
+
+    return response()->streamDownload(function () use ($courses) {
+        $handle = fopen('php://output', 'w');
+
+        fputcsv($handle, ['ID', 'Name', 'Description']);
+
+        foreach ($courses as $course) {
+            fputcsv($handle, [
+                $course->id,
+                $course->name,
+                $course->description,
+            ]);
+        }
+
+        fclose($handle);
+    }, $fileName, [
+        'Content-Type' => 'text/csv',
+    ]);
+}
 }
