@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->integer('age');
-            $table->foreignId('course_id')->constrained()->onDelete('restrict');
+            $table->foreignId('course_id')->nullable()->constrained()->onDelete('set null');
             
             $table->timestamps();
         });

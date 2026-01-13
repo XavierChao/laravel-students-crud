@@ -6,6 +6,23 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('students.index') }}">Students CRUD</a>
+        <div class="navbar-nav me-auto">
+            <a class="nav-link" href="{{ route('students.index') }}">Students</a>
+            <a class="nav-link" href="{{ route('courses.index') }}">Courses</a>
+        </div>
+        <div class="navbar-nav">
+            <span class="nav-link text-light">{{ Auth::user()->name }}</span>
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 <div class="container mt-5">
 
     <h2 class="mb-4">Courses List</h2>
@@ -21,6 +38,9 @@
     </a>
     <a href="{{ route('courses.export') }}" class="btn btn-primary mb-3">
         Export to CSV
+    </a>
+    <a href="{{ route('courses.exportWithStudents') }}" class="btn btn-secondary mb-3">
+        Export Courses with Students
     </a>
 
     <table class="table table-bordered">

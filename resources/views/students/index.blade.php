@@ -6,6 +6,23 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('students.index') }}">Students CRUD</a>
+        <div class="navbar-nav me-auto">
+            <a class="nav-link" href="{{ route('students.index') }}">Students</a>
+            <a class="nav-link" href="{{ route('courses.index') }}">Courses</a>
+        </div>
+        <div class="navbar-nav">
+            <span class="nav-link text-light">{{ Auth::user()->name }}</span>
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 <div class="container mt-5">
 
     <h2 class="mb-4">Students List</h2>

@@ -88,4 +88,46 @@ class CourseController extends Controller
         'Content-Type' => 'text/csv',
     ]);
 }
+
+public function exportCoursesWithStudents()
+{
+    $fileName = 'courses_with_students.csv';
+    $courses = Course::with('students')->get();
+
+    return response()->streamDownload(function () use ($courses) {
+        $handle = fopen('php://output', 'w');
+
+        fputcsv($handle, ['Course ID', 'Course Name', 'Description', 'Student ID', 'Student Name', 'Student Email', 'Student Age']);
+
+        foreach ($courses as $course) {
+            if ($course->students->isEmpty()) {
+                fputcsv($handle, [
+                    $course->id,
+                    $course->name,
+                    $course->description,
+                    '',
+                    'No students enrolled',
+                    '',
+                    '',
+                ]);
+            } else {
+                foreach ($course->students as $student) {
+                    fputcsv($handle, [
+                        $course->id,
+                        $course->name,
+                        $course->description,
+                        $student->id,
+                        $student->name,
+                        $student->email,
+                        $student->age,
+                    ]);
+                }
+            }
+        }
+
+        fclose($handle);
+    }, $fileName, [
+        'Content-Type' => 'text/csv',
+    ]);
+}
 }
